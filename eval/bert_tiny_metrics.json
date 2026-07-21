@@ -1,0 +1,31 @@
+{
+  "model": "prajjwal1/bert-tiny",
+  "best_val_macro_f1": 0.7829202341776706,
+  "per_engine_test": {
+    "doctr": {
+      "macro_f1": 0.8397,
+      "accuracy": 0.9545,
+      "n": 1670
+    },
+    "hunyuan": {
+      "macro_f1": 0.8124,
+      "accuracy": 0.8995,
+      "n": 1671
+    },
+    "ppocrv5": {
+      "macro_f1": 0.8472,
+      "accuracy": 0.9549,
+      "n": 1908
+    },
+    "tesseract": {
+      "macro_f1": 0.8243,
+      "accuracy": 0.924,
+      "n": 1670
+    },
+    "winocr": {
+      "macro_f1": 0.8454,
+      "accuracy": 0.9581,
+      "n": 1670
+    }
+  }
+}

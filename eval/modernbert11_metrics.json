@@ -1,0 +1,112 @@
+{
+  "model": "answerdotai/ModernBERT-base",
+  "best_val_macro_f1": 0.9463202649016818,
+  "per_engine_test": {
+    "doctr": {
+      "macro_f1": 0.8481,
+      "accuracy": 0.9749,
+      "n": 1670
+    },
+    "hunyuan": {
+      "macro_f1": 0.9161,
+      "accuracy": 0.9689,
+      "n": 1671
+    },
+    "ppocrv5": {
+      "macro_f1": 0.86,
+      "accuracy": 0.9764,
+      "n": 1908
+    },
+    "tesseract": {
+      "macro_f1": 0.948,
+      "accuracy": 0.9746,
+      "n": 1770
+    },
+    "winocr": {
+      "macro_f1": 0.9235,
+      "accuracy": 0.974,
+      "n": 1770
+    }
+  },
+  "report": {
+    "body": {
+      "precision": 0.9865442456862434,
+      "recall": 0.9845181674565561,
+      "f1-score": 0.9855301652565825,
+      "support": 6330.0
+    },
+    "cover_page": {
+      "precision": 0.9797979797979798,
+      "recall": 0.9948717948717949,
+      "f1-score": 0.9872773536895675,
+      "support": 390.0
+    },
+    "subsequent_cover_page": {
+      "precision": 0.85,
+      "recall": 0.5666666666666667,
+      "f1-score": 0.68,
+      "support": 30.0
+    },
+    "toc": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 60.0
+    },
+    "toa": {
+      "precision": 0.961038961038961,
+      "recall": 0.9866666666666667,
+      "f1-score": 0.9736842105263158,
+      "support": 150.0
+    },
+    "exhibit_cover": {
+      "precision": 0.9463414634146341,
+      "recall": 0.9748743718592965,
+      "f1-score": 0.9603960396039604,
+      "support": 199.0
+    },
+    "proof_of_service": {
+      "precision": 0.9083333333333333,
+      "recall": 0.990909090909091,
+      "f1-score": 0.9478260869565217,
+      "support": 220.0
+    },
+    "verification": {
+      "precision": 0.9615384615384616,
+      "recall": 1.0,
+      "f1-score": 0.9803921568627451,
+      "support": 125.0
+    },
+    "judicial_form": {
+      "precision": 0.9615384615384616,
+      "recall": 0.8333333333333334,
+      "f1-score": 0.8928571428571429,
+      "support": 30.0
+    },
+    "unknown_other": {
+      "precision": 0.9180327868852459,
+      "recall": 0.9023696682464455,
+      "f1-score": 0.9101338432122371,
+      "support": 1055.0
+    },
+    "transcript": {
+      "precision": 0.9803921568627451,
+      "recall": 1.0,
+      "f1-score": 0.9900990099009901,
+      "support": 200.0
+    },
+    "accuracy": 0.9738309250199112,
+    "macro avg": {
+      "precision": 0.9503234409178241,
+      "recall": 0.930382705455441,
+      "f1-score": 0.9371087280787329,
+      "support": 8789.0
+    },
+    "weighted avg": {
+      "precision": 0.9737625326088027,
+      "recall": 0.9738309250199112,
+      "f1-score": 0.9736128156862366,
+      "support": 8789.0
+    }
+  }
+}

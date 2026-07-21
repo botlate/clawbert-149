@@ -1,0 +1,109 @@
+{
+  "n_pages": 1671,
+  "labels": [
+    "body",
+    "cover_page",
+    "subsequent_cover_page",
+    "toc",
+    "toa",
+    "exhibit_cover",
+    "proof_of_service",
+    "verification",
+    "judicial_form",
+    "unknown_other"
+  ],
+  "engines": {
+    "ppocrv5": {
+      "macro_f1": 0.9322,
+      "accuracy": 0.9808,
+      "agreement_with_ppocrv5": 1.0,
+      "coverage": 1671,
+      "per_class_f1": {
+        "body": 0.99,
+        "cover_page": 0.981,
+        "subsequent_cover_page": 0.615,
+        "toc": 1.0,
+        "toa": 0.984,
+        "exhibit_cover": 0.975,
+        "proof_of_service": 0.956,
+        "verification": 0.98,
+        "judicial_form": 0.909,
+        "unknown_other": 0.932
+      }
+    },
+    "tesseract": {
+      "macro_f1": 0.7716,
+      "accuracy": 0.5266,
+      "agreement_with_ppocrv5": 0.538,
+      "coverage": 1671,
+      "per_class_f1": {
+        "body": 0.568,
+        "cover_page": 0.929,
+        "subsequent_cover_page": 0.667,
+        "toc": 0.737,
+        "toa": 0.931,
+        "exhibit_cover": 0.935,
+        "proof_of_service": 0.967,
+        "verification": 0.98,
+        "judicial_form": 0.714,
+        "unknown_other": 0.287
+      }
+    },
+    "easyocr": {
+      "macro_f1": 0.8222,
+      "accuracy": 0.9671,
+      "agreement_with_ppocrv5": 0.9814,
+      "coverage": 1671,
+      "per_class_f1": {
+        "body": 0.983,
+        "cover_page": 0.969,
+        "subsequent_cover_page": 0.615,
+        "toc": 0.0,
+        "toa": 0.947,
+        "exhibit_cover": 0.95,
+        "proof_of_service": 0.966,
+        "verification": 0.98,
+        "judicial_form": 0.909,
+        "unknown_other": 0.901
+      }
+    },
+    "doctr": {
+      "macro_f1": 0.8318,
+      "accuracy": 0.9701,
+      "agreement_with_ppocrv5": 0.9832,
+      "coverage": 1671,
+      "per_class_f1": {
+        "body": 0.985,
+        "cover_page": 0.981,
+        "subsequent_cover_page": 0.615,
+        "toc": 0.154,
+        "toa": 0.949,
+        "exhibit_cover": 0.961,
+        "proof_of_service": 0.945,
+        "verification": 0.98,
+        "judicial_form": 0.833,
+        "unknown_other": 0.913
+      }
+    },
+    "hunyuan": {
+      "macro_f1": 0.717,
+      "accuracy": 0.3674,
+      "agreement_with_ppocrv5": 0.3788,
+      "coverage": 1671,
+      "per_class_f1": {
+        "body": 0.315,
+        "cover_page": 0.961,
+        "subsequent_cover_page": 0.667,
+        "toc": 0.286,
+        "toa": 0.877,
+        "exhibit_cover": 0.976,
+        "proof_of_service": 0.966,
+        "verification": 0.98,
+        "judicial_form": 0.909,
+        "unknown_other": 0.233
+      }
+    }
+  },
+  "cross_engine_stability": 0.2914,
+  "n_flipped": 1184
+}
