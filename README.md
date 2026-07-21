@@ -6,30 +6,35 @@ page, it tells you what that page *is* — one of 11 structural types:
 `body · cover_page · subsequent_cover_page · toc · toa · exhibit_cover ·
 proof_of_service · verification · judicial_form · transcript · unknown_other`
 
-one of each, straight from filed documents:
+one of each, straight from filed documents (individual images in
+[docs/examples/](docs/examples/)):
 
 ![one example page per class](docs/page_types.jpg)
 
-i built it because i process a lot of filings and every page needs to go down a
-different path: covers go to caption extraction, body pages get their margin line
-numbers stripped, exhibits get their own treatment, transcripts are easy OCR.
-classify first, route second. the labels also ride along as metadata, which turns
-out to be the thing your RAG wishes it had.
+## what it's for
+
+twofold, but i would only rely on it for the first:
+
+1. **routing pages to the right OCR.** a pleading cover page goes to a model that
+   analyzes the regions and extracts critical document information; a table of
+   contents goes to an OCR that recognizes the structure of the headings; a
+   judicial form can go to a form-trained OCR; and so on. classify first, route
+   second.
+2. **per-page metadata for chunking.** tell the LLM working with the text "this
+   is a pleading cover page, it falls on page 1", or "this is a pleading cover
+   page falling on page 17, after an exhibit cover page" — stuff like that lowers
+   the risk of AI docket-context mistakes.
 
 ## the one problem it actually solves
 
 the first version of this model looked great — 98% accuracy — until i changed OCR
 engines. same pages, same model: 53% on tesseract text, 37% on VLM text. it had
-quietly memorized *how one OCR engine writes* (the pleading line-number rhythm)
-instead of what pages say.
+quietly memorized *how one OCR engine writes* instead of what pages say.
 
 the fix wasn't a bigger model. it was OCRing the same 13.6k labeled pages with
 **five different engines** and training on all of it:
 
 ![accuracy per OCR engine across three model generations](docs/robustness.png)
-
-the small model proves robustness comes from the data; the big one adds quality.
-clawbert-144 gives the same page the same label no matter who transcribed it:
 
 ![label stability comparison](docs/stability.png)
 
@@ -37,7 +42,7 @@ clawbert-144 gives the same page the same label no matter who transcribed it:
 
 | | |
 |---|---|
-| base | ModernBERT-base, 149.6M params, full-page input (1,536 tokens, no truncation tricks) |
+| base | ModernBERT-base, 149.6M params, full-page input (1,536 tokens) |
 | trained on | ~13.6k human-labeled pages from 653 CA filings × 5 OCR engines (PP-OCRv5, Tesseract, docTR, Hunyuan VLM, Windows OCR) |
 | splits | document-disjoint (no filing crosses train/test) |
 | held-out test | macro-F1 0.937 · accuracy 0.974 pooled across engines (`eval/modernbert11_metrics.json`) |
@@ -66,18 +71,23 @@ from clawbert144_infer import score_texts
 labels, probs = score_texts([page1_text, page2_text])
 ```
 
-## honest limitations
+## know what you're getting
 
-- scope is US/california civil filings, english, OCR text in, one page at a time.
-- robustness is *demonstrated* for the five trained engines; a sixth engine is
-  probably fine (that's the point of the training) but unmeasured.
-- `subsequent_cover_page` is genuinely ambiguous from one page alone (F1 0.77 with
-  document context, less without) — if you have whole documents, sequence models
-  on top of these embeddings fix that.
-- appellate materials are labeled `unknown_other` by my convention — that's a
-  choice, not a failure, and it may not be your choice.
-- text only. anything that's purely visual — a struck-through "[PROPOSED]", a
-  signature — is invisible to it.
+- **it assumes the PDF is already one document.** it won't work on an appendix or
+  a combined record — document order is information, especially with various
+  OCRs. split first, classify second.
+- **california, probably only.** california helpfully still uses the antiquated
+  pleading line numbers — annoying for OCR, but it turns out to be super helpful
+  for classification. i doubt it will work in other states unmodified.
+- **more categories are needed and forthcoming:** appellate cover pages, and
+  court-originating documents (orders, notifications, minute orders). for now
+  appellate materials land in `unknown_other` — a convention, not a failure.
+- robustness is demonstrated for the five trained engines; i haven't tested it on
+  other OCR models.
+- `subsequent_cover_page` is genuinely ambiguous from one page alone — if you
+  have whole documents, sequence models on top of these embeddings fix that.
+- text only. anything purely visual — a struck-through "[PROPOSED]", a signature
+  — is invisible to it.
 
 ## license
 
