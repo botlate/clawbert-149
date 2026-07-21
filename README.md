@@ -6,6 +6,10 @@ page, it tells you what that page *is* — one of 11 structural types:
 `body · cover_page · subsequent_cover_page · toc · toa · exhibit_cover ·
 proof_of_service · verification · judicial_form · transcript · unknown_other`
 
+one of each, straight from filed documents:
+
+![one example page per class](docs/page_types.jpg)
+
 i built it because i process a lot of filings and every page needs to go down a
 different path: covers go to caption extraction, body pages get their margin line
 numbers stripped, exhibits get their own treatment, transcripts are easy OCR.
