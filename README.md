@@ -11,6 +11,15 @@ one of each, straight from filed documents (individual images in
 
 ![one example page per class](docs/page_types.jpg)
 
+## it's not keyword matching
+
+a few held-out pages picked specifically to fool it — a declaration that reads
+like a verification, a petition that says PROOF OF SERVICE in the text, a
+citation-dense argument page that reads like a toa, and a mid-filing caption
+page that reads like a cover. real predictions, real confidences:
+
+![lookalike pages with model predictions](docs/lookalikes.jpg)
+
 ## what it's for
 
 twofold, but i would only rely on it for the first:
