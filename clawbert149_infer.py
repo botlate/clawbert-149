@@ -1,5 +1,5 @@
 """
-clawbert144_infer.py — standalone scorer for clawbert-144, the
+clawbert149_infer.py — standalone scorer for clawbert-149, the
 multi-OCR 11-class court-filing page-type classifier.
 
 This is the OCR-robust successor to ClawBERT (clawbert_infer.py): ModernBERT-base
@@ -27,8 +27,8 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _LOCAL = os.path.join(_HERE, "model")
 # local ./model dir if present, else the Hugging Face Hub repo
-MODEL_DIR = os.environ.get("CLAWBERT144_DIR",
-    _LOCAL if os.path.isfile(os.path.join(_LOCAL, "config.json")) else "RayJackson30/clawbert-144")
+MODEL_DIR = os.environ.get("CLAWBERT149_DIR",
+    _LOCAL if os.path.isfile(os.path.join(_LOCAL, "config.json")) else "RayJackson30/clawbert-149")
 BASE_TOKENIZER = "answerdotai/ModernBERT-base"
 MAXLEN = 1536
 LABELS = None  # filled from config.id2label at load time

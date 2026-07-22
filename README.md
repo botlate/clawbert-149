@@ -1,4 +1,4 @@
-# clawbert-144
+# clawbert-149
 
 A page-type classifier for California court filings. The purpose is to route pages of a litigation filing to an OCR tailored to that page type.
 
@@ -55,7 +55,7 @@ Claude made me some graphs with benchmarks showing incredible results. Because b
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import torch
 
-repo = "RayJackson30/clawbert-144"
+repo = "RayJackson30/clawbert-149"
 tok = AutoTokenizer.from_pretrained(repo)
 model = AutoModelForSequenceClassification.from_pretrained(repo).eval()
 
@@ -67,7 +67,7 @@ print(model.config.id2label[int(probs.argmax())], float(probs.max()))
 Or use the bundled scorer, which batches and picks a working GPU on its own:
 
 ```python
-from clawbert144_infer import score_texts
+from clawbert149_infer import score_texts
 labels, probs = score_texts([page1_text, page2_text])
 ```
 
