@@ -25,10 +25,10 @@ Exemplars (individual images in [docs/examples/](docs/examples/)):
 
 ## Purpose
 
-1. **Routing pages to the right OCR.** A cover page goes to a model that
-   extracts case metadata; a table of contents to one that reads heading
-   structure; a judicial form to a form-trained OCR. This tool doesn't do any of
-   this downstream work. It only classifies.
+1. **Routing pages to the right OCR.** Cover page text would go to a model
+   that extracts case metadata; TOC-designated to one that reads heading
+   structure; text from a judicial form page to a form-trained OCR. (BUT this tool 
+   doesn't do any of this downstream work. It only classifies.)
 2. **Metadata for chunking.** A secondary use is tagging extracted text to help
    an LLM when working with documents. E.g., use it to tag pages of an exhibit
    as an exhibit page.
