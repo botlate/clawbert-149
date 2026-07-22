@@ -1,7 +1,8 @@
 # clawbert-144
 
-A page-type classifier for California court filings. Give it the OCR text of one
-page, and it tells you what that page *is* — one of 11 structural types:
+A page-type classifier for California court filings. The purpose is to route pages of a litigation filing to an OCR tailored to that page type.
+
+Give it the OCR text of a document with page divisions, it looks at the text per page, with some info about before/after, and picks one of 11 structural types:
 
 `body · cover_page · subsequent_cover_page · toc · toa · exhibit_cover ·
 proof_of_service · verification · judicial_form · transcript · unknown_other`
@@ -11,18 +12,15 @@ One of each, straight from filed documents (individual images in
 
 ![one example page per class](docs/page_types.jpg)
 
-## It's not keyword matching
+## Not Keyword Matching
 
-A few held-out pages picked specifically to fool it — a declaration that reads
-like a verification, a petition that says PROOF OF SERVICE in the text, a
-citation-dense argument page that reads like a TOA, and a mid-filing caption
-page that reads like a cover. Real predictions, real confidences:
+A few examples of trickier pages correctly categorized:
 
 ![lookalike pages with model predictions](docs/lookalikes.jpg)
 
 ## What it's for
 
-Twofold, but I would only rely on it for the first:
+Twofold. I'd rely on it for the first but not the second:
 
 1. **Routing pages to the right OCR.** A pleading cover page goes to a model that
    analyzes the regions and extracts critical document information; a table of
@@ -34,18 +32,11 @@ Twofold, but I would only rely on it for the first:
    page falling on page 17, after an exhibit cover page" — stuff like that lowers
    the risk of AI docket-context mistakes.
 
-## The one problem it actually solves
 
-The first version of this model looked great — 98% accuracy — until I changed OCR
-engines. Same pages, same model: 53% on Tesseract text, 37% on VLM text. It had
-quietly memorized *how one OCR engine writes* instead of what pages say.
 
-The fix wasn't a bigger model. It was OCRing the same 13.6k labeled pages with
-**five different engines** and training on all of it:
+I initially built DistilBERT and XGBoost versions of the tool. They worked well for a single OCR type, but broke down when I fed it the same pages OCR'd by multiple engines.  The current model is trained on the same 13.6k labeled pages OCR'd by 5 very different OCR engines.
 
-![accuracy per OCR engine across three model generations](docs/robustness.png)
-
-![label stability comparison](docs/stability.png)
+Claude made me some graphs with benchmarks showing incredible results. Because benchmarks always look to me like garbage, here is my creaky-knee-if-it's-raining estimate: I think it makes the same pick I would make about 95-96% of the time, and then maybe another percent is picks on ambiguous pages, and then 2 or 3 percent of the time it does something stupid. 
 
 ## Specs
 
@@ -64,7 +55,7 @@ The fix wasn't a bigger model. It was OCRing the same 13.6k labeled pages with
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import torch
 
-repo = "REPLACE_ME/clawbert-144"
+repo = "RayJackson30/clawbert-144"
 tok = AutoTokenizer.from_pretrained(repo)
 model = AutoModelForSequenceClassification.from_pretrained(repo).eval()
 
@@ -80,23 +71,21 @@ from clawbert144_infer import score_texts
 labels, probs = score_texts([page1_text, page2_text])
 ```
 
-## Know what you're getting
+## Important Limitations
 
 - **It assumes the PDF is already one document.** It won't work on an appendix or
-  a combined record — document order is information, especially with various
-  OCRs. Split first, classify second.
-- **California, probably only.** California helpfully still uses the antiquated
-  pleading line numbers — annoying for OCR, but it turns out to be super helpful
+  a combined record — document order is a signal, especially with various
+  OCRs.
+- **California, probably only.** Trained on California pleadings, and California helpfully still uses the antiquated pleading line numbers. It's annoying for OCR, helpful
   for classification. I doubt it will work in other states unmodified.
 - **More categories are needed and forthcoming:** appellate cover pages, and
   court-originating documents (orders, notifications, minute orders). For now
-  appellate materials land in `unknown_other` — a convention, not a failure.
+  appellate materials land in `unknown_other`.
 - Robustness is demonstrated for the five trained engines; I haven't tested it on
   other OCR models.
 - `subsequent_cover_page` is genuinely ambiguous from one page alone — if you
   have whole documents, sequence models on top of these embeddings fix that.
-- Text only. Anything purely visual — a struck-through "[PROPOSED]", a signature
-  — is invisible to it.
+- Text only, which works so far. But also means there's stuff it will never be able to do, like deal with court stamps or signatures.
 
 ## License
 
