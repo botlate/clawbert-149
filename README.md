@@ -42,7 +42,7 @@ Trained on about 13K pages of human-labelled page images. Each page image was
 OCR'd five times, by five different OCR engines. Play around with the tabs
 below — the same cover page, five very different transcriptions, one label.
 Note that each page is part of a document, and the whole-document mode below
-takes previous/subsequent pages into account — which mostly matters for edge
+takes previous/subsequent pages into account, which mostly matters for edge
 (low-confidence) cases.
 
 <img src="docs/examples/cover_page.jpg" alt="cover page" width="300" align="right">
