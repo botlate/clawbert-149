@@ -41,8 +41,8 @@ overlap, but not always.
 Trained on about 13K pages of human-labelled page images. Each page image was
 OCR'd five times, by five different OCR engines. Play around with the tabs
 below — the same cover page, five very different transcriptions, one label.
-Note that each page is part of a document, and the process takes into account
-previous/subsequent classifications.
+Note that each page is part of a document, and the whole-document mode below
+takes previous/subsequent pages into account.
 
 <img src="docs/examples/cover_page.jpg" alt="cover page" width="300" align="right">
 
@@ -359,6 +359,19 @@ Or use the bundled scorer, which batches and picks a working GPU on its own:
 ```python
 from clawbert149_infer import score_texts
 labels, probs = score_texts([page1_text, page2_text])
+```
+
+## Whole-document mode
+
+The per-page model classifies one page at a time. The repo also ships a small
+context layer (`docxf/`, 1.8M params) that runs over a whole document's page
+embeddings — every page attends to every other page — so ambiguous pages get
+decided with document context. Pooled test macro-F1 goes 0.937 → 0.949;
+`subsequent_cover_page` F1 0.68 → 0.77. Feed it ONE document's pages, in order.
+
+```python
+from clawbert149_doc import score_document
+labels, probs = score_document([page1_text, page2_text, page3_text])
 ```
 
 ## Know what you're getting
