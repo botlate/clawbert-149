@@ -322,7 +322,7 @@ of different later treatment:
 
 | page type | later treatment |
 |---|---|
-| `cover_page` | A VLM that pulls out the parties, filing date, and case number — and retains the artefacts. |
+| `cover_page` | A VLM that pulls out the parties, filing date, and case number — and retains the artifacts. |
 | `transcript` | A reader that untangles the special transcript layout. |
 | `exhibit_cover` | These seem to fool VLMs, so send them to dumb OCR. |
 | `body` | OCR with better reading order and heading detection — and correlate with the TOC when there is one. |
